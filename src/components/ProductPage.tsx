@@ -22,7 +22,11 @@ const ProductPage = () => {
         const data = await response.json();
         setProduct(data);
       } catch (err) {
-        setError(err.message);
+        if (err instanceof Error) {
+          setError(err.message);
+        } else {
+          setError("An unknown error occurred");
+        }
       } finally {
         setLoading(false);
       }
