@@ -35,10 +35,12 @@ export default function Products() {
       {loading && <p>Loading products...</p>}
       {error && <p>{error}</p>}
 
-      <div>
-        {products.map((product) => (
-          <ProductCard key={product.id} product={product} />
-        ))}
+      <div className="h-screen w-full bg-gray-200 dark:bg-gray-800">
+        <div className="grid gap-6 p-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+          {products.map((product) => (
+            <ProductCard key={product.id} product={product} />
+          ))}
+        </div>
       </div>
     </div>
   );
