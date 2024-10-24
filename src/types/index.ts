@@ -1,6 +1,6 @@
 export interface Review {
   rating: number;
-  comments: string;
+  comment: string;
   date: string;
   reviewerName: string;
   reviewerEmail: string;

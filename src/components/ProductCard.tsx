@@ -25,8 +25,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         <Image
           src={product.thumbnail}
           alt={`${product.title}`}
-          width={100}
-          height={100}
+          width={500}
+          height={500}
           priority
           className="object-cover h-64 w-full"
         />

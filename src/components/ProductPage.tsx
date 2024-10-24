@@ -51,8 +51,8 @@ const ProductPage = () => {
                   <Image
                     src={product.thumbnail}
                     alt={`${product.title}`}
-                    height={100}
-                    width={100}
+                    height={500}
+                    width={500}
                     priority
                     className="w-full h-full object-cover"
                   />

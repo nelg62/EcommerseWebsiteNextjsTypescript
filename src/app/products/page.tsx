@@ -33,14 +33,14 @@ export default function Products() {
   console.log("products", products);
 
   return (
-    <div>
+    <div className="bg-gray-200 dark:bg-gray-800">
       <h1>Product Listing</h1>
 
       {loading && <p>Loading products...</p>}
       {error && <p>{error}</p>}
 
       <div className="h-screen w-full bg-gray-200 dark:bg-gray-800">
-        <div className="grid gap-6 p-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+        <div className="grid gap-6 p-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 bg-gray-200 dark:bg-gray-800">
           {products.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}

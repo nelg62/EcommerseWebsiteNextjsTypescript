@@ -1,4 +1,5 @@
 import ProductPage from "@/components/ProductPage";
+import ReviewCard from "@/components/ReviewCard";
 
 export default function ProductsPage() {
   return (
@@ -6,6 +7,7 @@ export default function ProductsPage() {
       <h1>Product Details</h1>
 
       <ProductPage />
+      <ReviewCard />
     </div>
   );
 }
