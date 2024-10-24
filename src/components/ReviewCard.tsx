@@ -32,6 +32,12 @@ const ReviewCard = () => {
     fetchProductById();
   }, [id]);
 
+  // Helper function to generate a random number for Picsum
+  const getRandomImageUrl = () => {
+    const randomId = Math.floor(Math.random() * 1000); // Random number between 0 and 999
+    return `https://picsum.photos/id/${randomId}/200/200`;
+  };
+
   return (
     <>
       {loading && <p>Loading reviews...</p>}
@@ -51,10 +57,7 @@ const ReviewCard = () => {
                     <div className="relative w-16 h-16 rounded-full overflow-hidden">
                       <img
                         className="absolute top-0 left-0 w-full h-full bg-cover object-fit object-cover"
-                        src={
-                          review.profilePicture ||
-                          "https://picsum.photos/id/646/200/200"
-                        } // Default image if none provided
+                        src={review.profilePicture || getRandomImageUrl()} // Default image if none provided
                         alt="Profile picture"
                       />
                       <div className="absolute top-0 left-0 w-full h-full rounded-full shadow-inner"></div>
