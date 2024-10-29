@@ -17,6 +17,11 @@ const NavBar = () => {
             Products
           </Link>
         </li>
+        <li>
+          <Link href="/cart" className="text-white hover:underline">
+            Cart
+          </Link>
+        </li>
       </ul>
     </nav>
   );
