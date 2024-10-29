@@ -30,4 +30,21 @@ describe("GET /api/products/[id]", () => {
     // Verify that the response is an instance on NextResponse
     expect(response).toBeInstanceOf(NextResponse);
   });
+
+  it("should return an error when fetch fails", async () => {
+    const mockRequest = new Request("https://dummyjson.com/products/999");
+    const mockParams = { params: { id: "999" } };
+
+    jest.spyOn(global, "fetch").mockResolvedValueOnce({
+      ok: false,
+    } as Response);
+
+    const response = await GET(mockRequest, mockParams);
+    const jsonResponse = await response.json();
+
+    expect(jsonResponse).toEqual({
+      error: "Failed to fetch product with id 999",
+    });
+    expect(response).toHaveProperty("status", 500);
+  });
 });
