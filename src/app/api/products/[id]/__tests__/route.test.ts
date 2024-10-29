@@ -31,6 +31,7 @@ describe("GET /api/products/[id]", () => {
     expect(response).toBeInstanceOf(NextResponse);
   });
 
+  //   Mock fetch to simulate a failed response
   it("should return an error when fetch fails", async () => {
     const mockRequest = new Request("https://dummyjson.com/products/999");
     const mockParams = { params: { id: "999" } };
@@ -44,6 +45,25 @@ describe("GET /api/products/[id]", () => {
 
     expect(jsonResponse).toEqual({
       error: "Failed to fetch product with id 999",
+    });
+    expect(response).toHaveProperty("status", 500);
+  });
+
+  it("should handle fetch throwing an exception", async () => {
+    const mockRequest = new Request("http://localhost:3000/api/products/2");
+    const mockParams = { params: { id: "2" } };
+
+    // Mock fetch to throw an error
+    jest
+      .spyOn(global, "fetch")
+      .mockRejectedValueOnce(new Error("Network Error"));
+
+    const response = await GET(mockRequest, mockParams);
+    const jsonResponse = await response.json();
+
+    // Verify the error message and status when an exception occurs
+    expect(jsonResponse).toEqual({
+      error: "Failed to fetch product with id 2",
     });
     expect(response).toHaveProperty("status", 500);
   });
