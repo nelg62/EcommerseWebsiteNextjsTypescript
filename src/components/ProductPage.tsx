@@ -2,40 +2,56 @@
 
 "use client";
 import { Product } from "@/types";
+// import { Product } from "@/types";
 import Image from "next/image";
-import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
+// import { useParams } from "next/navigation";
+// import { useEffect, useState } from "react";
 
-const ProductPage = () => {
-  const { id } = useParams();
-  const [product, setProduct] = useState<Product | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
+interface ProductPageProps {
+  loading: boolean;
+  product: Product | null;
+  error: string | null;
+}
 
-  useEffect(() => {
-    const fetchProductById = async () => {
-      try {
-        const response = await fetch(`/api/products/${id}`);
-        if (!response.ok) {
-          throw new Error("Failed to fetch products");
-        }
-        const data = await response.json();
-        setProduct(data);
-      } catch (err) {
-        if (err instanceof Error) {
-          setError(err.message);
-        } else {
-          setError("An unknown error occurred");
-        }
-      } finally {
-        setLoading(false);
-      }
-    };
+const ProductPage: React.FC<ProductPageProps> = ({
+  loading,
+  product,
+  error,
+}) => {
+  // const { id } = useParams();
+  // const [product, setProduct] = useState<Product | null>(null);
+  // const [loading, setLoading] = useState<boolean>(true);
+  // const [error, setError] = useState<string | null>(null);
 
-    fetchProductById();
-  }, [id]);
+  // useEffect(() => {
+  //   if (!id) return;
+  //   const fetchProductById = async () => {
+  //     try {
+  //       const response = await fetch(`/api/products/${id}`);
+  //       if (!response.ok) {
+  //         throw new Error("Failed to fetch products");
+  //       }
+  //       const data = await response.json();
+  //       setProduct(data);
+  //     } catch (err) {
+  //       if (err instanceof Error) {
+  //         setError(err.message);
+  //       } else {
+  //         setError("An unknown error occurred");
+  //       }
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
 
-  console.log("product", product);
+  //   fetchProductById();
+  // }, [id]);
+
+  // console.log("product", id);
+
+  // if (!id) return <p>Loading product...</p>;
+
+  if (loading) return <p>Loading product...</p>;
 
   return (
     <>

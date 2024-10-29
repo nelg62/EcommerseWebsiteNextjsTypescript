@@ -11,6 +11,7 @@ const ReviewCard = () => {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    if (!id) return;
     const fetchProductById = async () => {
       try {
         const response = await fetch(`/api/products/${id}`);
@@ -32,6 +33,8 @@ const ReviewCard = () => {
 
     fetchProductById();
   }, [id]);
+
+  if (!id) return <p>Loading product...</p>;
 
   // Helper function to generate a random number for Picsum
   const getRandomImageUrl = () => {
