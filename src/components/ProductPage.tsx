@@ -2,10 +2,7 @@
 
 "use client";
 import { Product } from "@/types";
-// import { Product } from "@/types";
 import Image from "next/image";
-// import { useParams } from "next/navigation";
-// import { useEffect, useState } from "react";
 
 interface ProductPageProps {
   loading: boolean;
@@ -18,39 +15,6 @@ const ProductPage: React.FC<ProductPageProps> = ({
   product,
   error,
 }) => {
-  // const { id } = useParams();
-  // const [product, setProduct] = useState<Product | null>(null);
-  // const [loading, setLoading] = useState<boolean>(true);
-  // const [error, setError] = useState<string | null>(null);
-
-  // useEffect(() => {
-  //   if (!id) return;
-  //   const fetchProductById = async () => {
-  //     try {
-  //       const response = await fetch(`/api/products/${id}`);
-  //       if (!response.ok) {
-  //         throw new Error("Failed to fetch products");
-  //       }
-  //       const data = await response.json();
-  //       setProduct(data);
-  //     } catch (err) {
-  //       if (err instanceof Error) {
-  //         setError(err.message);
-  //       } else {
-  //         setError("An unknown error occurred");
-  //       }
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
-
-  //   fetchProductById();
-  // }, [id]);
-
-  // console.log("product", id);
-
-  // if (!id) return <p>Loading product...</p>;
-
   if (loading) return <p>Loading product...</p>;
 
   return (

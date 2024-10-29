@@ -1,6 +1,6 @@
 "use client";
 import ProductPage from "@/components/ProductPage";
-// import ReviewCard from "@/components/ReviewCard";
+import ReviewCard from "@/components/ReviewCard";
 import { Product } from "@/types";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -41,7 +41,7 @@ export default function ProductsPage() {
       <h1>Product Details</h1>
 
       <ProductPage loading={loading} product={product} error={error} />
-      {/* <ReviewCard /> */}
+      <ReviewCard loading={loading} product={product} error={error} />
     </div>
   );
 }
