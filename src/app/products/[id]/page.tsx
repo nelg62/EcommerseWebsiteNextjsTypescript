@@ -39,9 +39,14 @@ export default function ProductsPage() {
   return (
     <div>
       <h1>Product Details</h1>
-
-      <ProductPage loading={loading} product={product} error={error} />
-      <ReviewCard loading={loading} product={product} error={error} />
+      {product ? (
+        <>
+          <ProductPage loading={loading} product={product} error={error} />
+          <ReviewCard loading={loading} product={product} error={error} />
+        </>
+      ) : (
+        <p>Loading...</p>
+      )}
     </div>
   );
 }

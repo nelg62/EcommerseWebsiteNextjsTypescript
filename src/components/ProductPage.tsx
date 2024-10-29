@@ -1,12 +1,13 @@
 // https://tailwindflex.com/@jaxstone/product-page-2
 
 "use client";
+import { useCart } from "@/context/CartContext";
 import { Product } from "@/types";
 import Image from "next/image";
 
 interface ProductPageProps {
   loading: boolean;
-  product: Product | null;
+  product: Product;
   error: string | null;
 }
 
@@ -15,7 +16,14 @@ const ProductPage: React.FC<ProductPageProps> = ({
   product,
   error,
 }) => {
+  const { addToCart } = useCart();
   if (loading) return <p>Loading product...</p>;
+
+  const handleAddToCart = () => {
+    console.log("productpage add to cart", product.id);
+
+    addToCart(product);
+  };
 
   return (
     <>
@@ -39,7 +47,10 @@ const ProductPage: React.FC<ProductPageProps> = ({
                 </div>
                 <div className="flex -mx-2 mb-4">
                   <div className="w-1/2 px-2">
-                    <button className="w-full bg-gray-900 dark:bg-gray-600 text-white py-2 px-4 rounded-full font-bold hover:bg-gray-800 dark:hover:bg-gray-700">
+                    <button
+                      onClick={handleAddToCart}
+                      className="w-full bg-gray-900 dark:bg-gray-600 text-white py-2 px-4 rounded-full font-bold hover:bg-gray-800 dark:hover:bg-gray-700"
+                    >
                       Add to Cart
                     </button>
                   </div>

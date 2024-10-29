@@ -4,6 +4,7 @@
 
 // https://tailwindflex.com/@jaxstone/product-page-2
 // https://tailwindflex.com/@omkar007/product-card-6
+import { useCart } from "@/context/CartContext";
 import { Product } from "@/types";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -14,9 +15,16 @@ interface ProductCardProps {
 
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const router = useRouter();
+  const { addToCart } = useCart();
 
   const handleCardClick = () => {
     router.push(`/products/${product.id}`);
+  };
+
+  const handleAddToCart = () => {
+    console.log("productcard add to cart", product.id);
+
+    addToCart(product);
   };
 
   return (
@@ -44,7 +52,10 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       </div>
 
       <div className="mt-4 p-4 border-t border-gray-200 dark:border-gray-500">
-        <button className="w-full flex justify-between items-center font-bold cursor-pointer hover:underline text-gray-800 dark:text-gray-50">
+        <button
+          onClick={handleAddToCart}
+          className="w-full flex justify-between items-center font-bold cursor-pointer hover:underline text-gray-800 dark:text-gray-50"
+        >
           <span className="text-base">Add to Cart</span>
           <div className="h-6 w-6">+</div>
         </button>
