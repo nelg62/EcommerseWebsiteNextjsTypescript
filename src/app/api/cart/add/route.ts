@@ -1,6 +1,7 @@
+import { Cart, CartItem } from "@/types";
 import { NextResponse } from "next/server";
 
-const cart = []; // Temporart cart memory array
+const cart: Cart = []; // Temporart cart memory array
 
 export async function POST(request: Request) {
   try {
@@ -13,7 +14,8 @@ export async function POST(request: Request) {
       cart[existingItemIndex].quantity += quantity;
     } else {
       // Add new product to cart
-      cart.push({ id, title, price, quantity });
+      const newItem: CartItem = { id, title, price, quantity };
+      cart.push(newItem);
     }
 
     return NextResponse.json({ message: "Item added to cart", cart });

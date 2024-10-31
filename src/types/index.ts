@@ -41,3 +41,12 @@ export interface Product {
   images: string[];
   thumbnail: string;
 }
+
+export interface CartItem {
+  id: number;
+  title: string;
+  price: number;
+  quantity: number;
+}
+
+export type Cart = CartItem[];
