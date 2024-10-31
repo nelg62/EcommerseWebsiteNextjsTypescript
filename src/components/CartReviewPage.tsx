@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 const CartReviewPage = () => {
-  const { cart, removeFromCart } = useCart();
+  const { cart, removeFromCart, clearCart } = useCart();
   console.log("cart", cart);
 
   return (
@@ -14,6 +14,7 @@ const CartReviewPage = () => {
             <h1 className="font-semibold text-2xl">Shopping Cart</h1>
             <h2 className="font-semibold text-2xl">{cart.length} Items</h2>
           </div>
+          <button onClick={clearCart}>Clear Cart</button>
           {cart.length === 0 ? (
             <p>Your cart is empty</p>
           ) : (
