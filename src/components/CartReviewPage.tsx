@@ -50,9 +50,9 @@ const CartReviewPage = () => {
                         <option>03</option>
                       </select>
                     </div>
-                    <p className="text-xs leading-3 text-gray-600 pt-2">
+                    {/* <p className="text-xs leading-3 text-gray-600 pt-2">
                       Height: {item.dimensions.height}
-                    </p>
+                    </p> */}
                     <div className="flex items-center justify-between pt-5">
                       <div className="flex items-center">
                         <p className="text-xs leading-3 underline text-gray-800 cursor-pointer">
