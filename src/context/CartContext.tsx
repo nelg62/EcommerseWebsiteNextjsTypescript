@@ -60,11 +60,46 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   //   });
   // };
 
-  const removeFromCart = (id: number) => {
-    setCart((prevCart) => prevCart.filter((item) => item.id !== id));
+  const removeFromCart = async (id: number) => {
+    try {
+      const response = await fetch("/api/cart/remove", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ id }),
+      });
+      if (!response.ok) throw new Error("Failed to remove item from cart");
+
+      const data = await response.json();
+      setCart(data.cart);
+    } catch (error) {
+      console.error("Error removing form cart", error);
+    }
   };
 
-  const clearCart = () => setCart([]);
+  // const removeFromCart = (id: number) => {
+  //   setCart((prevCart) => prevCart.filter((item) => item.id !== id));
+  // };
+
+  // const clearCart = () => setCart([]);
+
+  const clearCart = async () => {
+    try {
+      const response = await fetch("/api/cart/clear", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (!response.ok) throw new Error("Failed to clear the cart");
+
+      const data = await response.json();
+      setCart(data.cart);
+    } catch (error) {
+      console.error("Error clearing the cart:", error);
+    }
+  };
 
   return (
     <CartContext.Provider
