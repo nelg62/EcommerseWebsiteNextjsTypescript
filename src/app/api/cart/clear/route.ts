@@ -14,22 +14,3 @@ export async function POST() {
     );
   }
 }
-
-// import { Cart } from "@/types";
-// import { NextResponse } from "next/server";
-
-// let cart: Cart = [];
-
-// export async function POST() {
-//   try {
-//     cart = [];
-
-//     return NextResponse.json({ message: "Cart cleared", cart });
-//   } catch (error) {
-//     console.error("Error clearing the cart", error);
-//     return NextResponse.json(
-//       { error: "Failed to clear the cart" },
-//       { status: 500 }
-//     );
-//   }
-// }
