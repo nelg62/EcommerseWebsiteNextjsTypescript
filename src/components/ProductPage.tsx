@@ -1,5 +1,7 @@
 // https://tailwindflex.com/@jaxstone/product-page-2
 
+// can also try this one https://tailwindflex.com/@dika99/product-details-page
+
 "use client";
 import { useCart } from "@/context/CartContext";
 import { Product } from "@/types";

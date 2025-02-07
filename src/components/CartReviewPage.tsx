@@ -1,3 +1,5 @@
+//  if the one i am using for cart is not good i can use this https://tailwindflex.com/@code-huit/order-sumamary
+
 import { useCart } from "@/context/CartContext";
 import Image from "next/image";
 import Link from "next/link";
