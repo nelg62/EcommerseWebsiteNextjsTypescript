@@ -12,3 +12,7 @@
 <!-- Database -->
 <!-- create database most likely with sequlize and supabase -->
 <!-- ... -->
+
+ToDo--
+
+- in profuct card add on hover on card icon change to plus and have tooltip to add to cart
