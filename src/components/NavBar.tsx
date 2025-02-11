@@ -1,6 +1,7 @@
 // https://stackademic.com/blog/how-to-create-a-nav-bar-component-using-react-with-typescript
 
 import Link from "next/link";
+import ThemeToggle from "./ThemeToggle";
 
 const NavBar = () => {
   console.log("NavBar rendered");
@@ -23,6 +24,7 @@ const NavBar = () => {
           </Link>
         </li>
       </ul>
+      <ThemeToggle />
     </nav>
   );
 };
