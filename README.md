@@ -17,4 +17,4 @@ ToDo--
 
 <!-- - in profuct card add on hover on card icon change to plus and have tooltip to add to cart -->
 
-- create a button to toggle light and dark mode
+- Create themes for light and dark mode toggle button and apply to components
