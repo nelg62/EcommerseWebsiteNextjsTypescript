@@ -17,4 +17,8 @@ ToDo--
 
 <!-- - in profuct card add on hover on card icon change to plus and have tooltip to add to cart -->
 
-- Create themes for light and dark mode toggle button and apply to components
+-- shoping cart when refreshing page after removing item from cart it does not call a get to the backend so no information is display items are displayed again incart if another item is added to cart will need to fix
+
+-- add ability to remove and add qantity of items in cart view rather then removing all
+
+-- add tests to backed and frounednd functions when happy with them
