@@ -1,129 +1,135 @@
-//  if the one i am using for cart is not good i can use this https://tailwindflex.com/@code-huit/order-sumamary
-
 import { useCart } from "@/context/CartContext";
 import Image from "next/image";
 import Link from "next/link";
 
 const CartReviewPage = () => {
   const { cart, removeFromCart, clearCart } = useCart();
-  console.log("cart", cart);
+
+  const calculateSubtotal = () => {
+    return cart.reduce((total, item) => total + item.price * item.quantity, 0);
+  };
 
   return (
-    <div className="container mx-auto mt-10">
-      <div className="sm:flex shadow-md my-10">
-        <div className="w-full sm:w-3/4 bg-white px-10 py-10">
-          <div className="flex justify-between border-b pb-8">
-            <h1 className="font-semibold text-2xl">Shopping Cart</h1>
-            <h2 className="font-semibold text-2xl">{cart.length} Items</h2>
-          </div>
-          <button onClick={clearCart}>Clear Cart</button>
-          {cart.length === 0 ? (
-            <p>Your cart is empty</p>
-          ) : (
-            <div>
-              {cart.map((item) => (
+    <div className="py-14 px-4 md:px-6 2xl:px-20 2xl:container 2xl:mx-auto">
+      {/* Order Header */}
+      <div className="flex justify-start item-start space-y-2 flex-col">
+        <h1 className="text-3xl dark:text-white lg:text-4xl font-semibold leading-7 lg:leading-9 text-gray-800">
+          Shopping Cart
+        </h1>
+        <p className="text-base dark:text-gray-300 font-medium leading-6 text-gray-600">
+          {cart.length} {cart.length === 1 ? "item" : "items"} in your cart
+        </p>
+      </div>
+
+      {/* Cart Section */}
+      <div className="mt-10 flex flex-col xl:flex-row justify-center items-stretch w-full xl:space-x-8 space-y-4 md:space-y-6 xl:space-y-0">
+        {/* Cart Items */}
+        <div className="flex flex-col justify-start items-start w-full space-y-4 md:space-y-6 xl:space-y-8">
+          <div className="flex flex-col justify-start items-start dark:bg-gray-800 bg-gray-50 px-4 py-4 md:py-6 md:p-6 xl:p-8 w-full">
+            <p className="text-lg md:text-xl dark:text-white font-semibold leading-6 xl:leading-5 text-gray-800">
+              Your Cart
+            </p>
+
+            {cart.length === 0 ? (
+              <p className="text-gray-600 mt-4">Your cart is empty.</p>
+            ) : (
+              cart.map((item) => (
                 <div
                   key={item.id}
-                  className="md:flex items-stretch py-8 md:py-10 lg:py-8 border-t border-gray-50"
+                  className="mt-6 md:mt-6 flex flex-col md:flex-row justify-start items-start md:items-center md:space-x-6 xl:space-x-8 w-full border-b pb-6"
                 >
-                  <div className="md:w-4/12 2xl:w-1/4 w-full">
+                  <div className="w-full md:w-40">
                     <Image
                       src={item.thumbnail}
-                      alt={`${item.title}`}
-                      width={500}
-                      height={500}
-                      className="h-full object-center object-cover md:block hidden"
+                      alt={item.title}
+                      width={160}
+                      height={160}
+                      className="object-cover"
                     />
                   </div>
-                  <div className="md:pl-3 md:w-8/12 2xl:w-3/4 flex flex-col justify-center">
-                    <p className="text-xs leading-3 text-gray-800 md:pt-0 pt-4">
-                      {item.sku}
-                    </p>
-                    <div className="flex items-center justify-between w-full">
-                      <p className="text-base font-black leading-none text-gray-800">
+                  <div className="flex flex-col md:flex-row justify-between items-start w-full">
+                    <div className="w-full flex flex-col justify-start items-start space-y-2">
+                      <h3 className="text-lg xl:text-xl font-semibold leading-6 text-gray-800 dark:text-white">
                         {item.title}
+                      </h3>
+                      <p className="text-sm dark:text-gray-400 text-gray-600">
+                        SKU: {item.sku}
                       </p>
-                      <select
-                        aria-label="Select quantity"
-                        className="py-2 px-1 border border-gray-200 mr-6 focus:outline-none"
-                      >
-                        <option>01</option>
-                        <option>02</option>
-                        <option>03</option>
-                      </select>
                     </div>
-                    {/* <p className="text-xs leading-3 text-gray-600 pt-2">
-                      Height: {item.dimensions.height}
-                    </p> */}
-                    <div className="flex items-center justify-between pt-5">
-                      <div className="flex items-center">
-                        <p className="text-xs leading-3 underline text-gray-800 cursor-pointer">
-                          Add to Favorites
-                        </p>
-                        <p
-                          onClick={() => removeFromCart(item.id)}
-                          className="text-xs leading-3 underline text-red-500 pl-5 cursor-pointer"
-                        >
-                          Remove
-                        </p>
-                      </div>
-                      <p className="text-base font-black leading-none text-gray-800">
-                        {item.price}
+                    <div className="flex justify-between items-center w-full md:w-auto space-x-4">
+                      <p className="text-base dark:text-white xl:text-lg leading-6 text-gray-800">
+                        ${item.price.toFixed(2)}
                       </p>
+                      <p className="text-base dark:text-white xl:text-lg leading-6 text-gray-800">
+                        Qty: {item.quantity}
+                      </p>
+                      <button
+                        onClick={() => removeFromCart(item.id)}
+                        className="text-red-500 underline text-sm"
+                      >
+                        Remove
+                      </button>
                     </div>
                   </div>
                 </div>
-              ))}
-              <Link
-                href="/products"
-                className="flex font-semibold text-indigo-600 text-sm mt-10"
+              ))
+            )}
+          </div>
+
+          {/* Continue Shopping & Clear Cart */}
+          <div className="flex justify-between w-full">
+            <Link href="/products">
+              <span className="text-indigo-600 text-sm font-semibold cursor-pointer">
+                ← Continue Shopping
+              </span>
+            </Link>
+            {cart.length > 0 && (
+              <button
+                onClick={clearCart}
+                className="text-red-500 text-sm font-semibold"
               >
-                Continue Shopping
-              </Link>
-            </div>
-          )}
+                Clear Cart
+              </button>
+            )}
+          </div>
         </div>
-        <div className="w-full sm:w-1/4 md:w-1/2 px-8 py-10">
-          <h1 className="font-semibold text-2xl border-b pb-8">
-            Order Summary
-          </h1>
-          <div className="flex justify-between mt-10 mb-5">
-            <span className="font-semibold text-sm uppercase">
-              Items {cart.length}
-            </span>
-            <span className="font-semibold text-sm">$</span>
+
+        {/* Order Summary */}
+        <div className="flex flex-col px-4 py-6 md:p-6 xl:p-8 w-full bg-gray-50 dark:bg-gray-800 space-y-6">
+          <h3 className="text-xl dark:text-white font-semibold leading-5 text-gray-800">
+            Summary
+          </h3>
+
+          <div className="flex justify-between w-full border-b pb-4">
+            <p className="text-base dark:text-white leading-4 text-gray-800">
+              Subtotal
+            </p>
+            <p className="text-base dark:text-gray-300 leading-4 text-gray-600">
+              ${calculateSubtotal().toFixed(2)}
+            </p>
           </div>
-          <div>
-            <label className="font-medium inline-block mb-3 text-sm uppercase">
+
+          <div className="flex justify-between w-full border-b pb-4">
+            <p className="text-base dark:text-white leading-4 text-gray-800">
               Shipping
-            </label>
-            <select className="block p-2 text-gray-600 w-full text-sm">
-              <option>Standard shipping</option>
-            </select>
+            </p>
+            <p className="text-base dark:text-gray-300 leading-4 text-gray-600">
+              Free
+            </p>
           </div>
-          <div className="py-10">
-            <label className="font-semibold inline-block mb-3 text-sm uppercase">
-              Promo Code
-            </label>
-            <input
-              type="text"
-              id="promo"
-              placeholder="Enter your code"
-              className="p-2 text-sm w-full"
-            />
+
+          <div className="flex justify-between w-full">
+            <p className="text-lg dark:text-white font-semibold leading-4 text-gray-800">
+              Total
+            </p>
+            <p className="text-lg dark:text-gray-300 font-semibold leading-4 text-gray-600">
+              ${calculateSubtotal().toFixed(2)}
+            </p>
           </div>
-          <button className="bg-red-500 hover:bg-red-600 px-5 py-2 text-sm text-white uppercase">
-            Apply
+
+          <button className="bg-indigo-500 font-semibold hover:bg-indigo-600 py-3 text-sm text-white uppercase w-full">
+            Proceed to Checkout
           </button>
-          <div className="border-t mt-8">
-            <div className="flex font-semibold justify-between py-6 text-sm uppercase">
-              <span></span>
-              <span></span>
-            </div>
-            <button className="bg-indigo-500 font-semibold hover:bg-indigo-600 py-3 text-sm text-white uppercase w-full">
-              Checkout
-            </button>
-          </div>
         </div>
       </div>
     </div>
