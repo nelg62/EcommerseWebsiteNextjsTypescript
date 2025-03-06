@@ -15,26 +15,31 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
+// define props for the ProductCard component
 interface ProductCardProps {
   product: Product;
 }
 
+// ProductCard component
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
-  const router = useRouter();
-  const { addToCart } = useCart();
+  const router = useRouter(); // initialize router
+  const { addToCart } = useCart(); // Get addToCart function from CartContext
 
-  const [isLiked, setIsLiked] = useState(false);
+  const [isLiked, setIsLiked] = useState(false); // state to handle like functionality
 
+  // function to handle card click and navigation to product details page
   const handleCardClick = () => {
     router.push(`/products/${product.id}`);
   };
 
+  // function to handle adding product to cart
   const handleAddToCart = () => {
     console.log("productcard add to cart", product.id);
 
     addToCart(product);
   };
 
+  // function to toggle like state
   const toggleHeart = () => {
     setIsLiked(!isLiked);
   };
