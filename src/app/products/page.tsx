@@ -4,54 +4,58 @@ import { useEffect, useState, useCallback, useRef } from "react";
 import { Product } from "@/types";
 
 export default function Products() {
-  const [products, setProducts] = useState<Product[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
-  const [nextUrl, setNextUrl] = useState<string | null>("/api/products?page=1"); // Start with the first page
+  const [products, setProducts] = useState<Product[]>([]); // state to store the list of products
+  const [loading, setLoading] = useState<boolean>(false); // state for loading
+  const [error, setError] = useState<string | null>(null); // state for error
+  const [nextUrl, setNextUrl] = useState<string | null>("/api/products?page=1"); // state to store URL for next page of products
 
-  const observer = useRef<IntersectionObserver | null>(null);
+  const observer = useRef<IntersectionObserver | null>(null); // ref to store IntersectionObserver instance to check when scrolling screen
 
+  // callback to check the last product element for infinite scrolling
   const lastProductRef = useCallback(
     (node: HTMLDivElement | null) => {
-      if (loading) return;
-      if (observer.current) observer.current.disconnect();
+      if (loading) return; // if already loading do not observe
+      if (observer.current) observer.current.disconnect(); // disconnect previous observer
 
       observer.current = new IntersectionObserver((entries) => {
+        // iff the last product is in view on the screen and there is a nextURL in state, fetch more products
         if (entries[0].isIntersecting && nextUrl) {
           fetchMoreProducts();
         }
       });
 
-      if (node) observer.current.observe(node);
+      if (node) observer.current.observe(node); // Observe the new node
     },
     [loading, nextUrl]
   );
 
+  // Fetch initial products when components mount
   useEffect(() => {
-    fetchMoreProducts(); // Fetch initial products
+    fetchMoreProducts();
   }, []);
 
+  // Function to fetch more products from API
   const fetchMoreProducts = async () => {
-    if (!nextUrl) return;
+    if (!nextUrl) return; // do nothing if there is no next URL
 
-    setLoading(true);
+    setLoading(true); // set loading to true befor fetching
     try {
-      const response = await fetch(nextUrl);
+      const response = await fetch(nextUrl); // Fetch the next page of products
       if (!response.ok) {
-        throw new Error("Failed to fetch products");
+        throw new Error("Failed to fetch products"); // throw and error if the response is not ok
       }
-      const data = await response.json();
+      const data = await response.json(); // Parse JSON response
 
-      setProducts((prev) => [...prev, ...data.products]);
+      setProducts((prev) => [...prev, ...data.products]); // Append the new products to the existing list
       setNextUrl(data.next); // Update next page URL
     } catch (err) {
       if (err instanceof Error) {
-        setError(err.message);
+        setError(err.message); // set the srror message
       } else {
-        setError("An unknown error occurred");
+        setError("An unknown error occurred"); // set a generic error message
       }
     } finally {
-      setLoading(false);
+      setLoading(false); // set loading to false after fetching
     }
   };
 
