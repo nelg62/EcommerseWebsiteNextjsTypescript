@@ -2,10 +2,12 @@
 import { createContext, useContext, useState, ReactNode } from "react";
 import { Product } from "@/types";
 
+// extends the Product interface to incluse quantity for CartItem
 interface CartItem extends Product {
   quantity: number;
 }
 
+// define properties and methods in CartContext
 interface CartContextProps {
   cart: CartItem[];
   addToCart: (product: Product) => void;
@@ -13,11 +15,14 @@ interface CartContextProps {
   clearCart: () => void;
 }
 
+// create CartContext with undefined as initial value
 const CartContext = createContext<CartContextProps | undefined>(undefined);
 
+// CartProvider component to wrap around parts of app that need cart funcionality
 export const CartProvider = ({ children }: { children: ReactNode }) => {
   const [cart, setCart] = useState<CartItem[]>([]);
 
+  // function to add a product to cart
   const addToCart = async (product: Product) => {
     try {
       const response = await fetch("/api/cart/add", {
@@ -42,6 +47,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  // function to remove a product from cart by its ID
   const removeFromCart = async (id: number) => {
     try {
       const response = await fetch("/api/cart/remove", {
@@ -60,6 +66,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  // function to clear all items from cart
   const clearCart = async () => {
     try {
       const response = await fetch("/api/cart/clear", {
@@ -77,6 +84,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  // provide cart state and methods to components
   return (
     <CartContext.Provider
       value={{ cart, addToCart, removeFromCart, clearCart }}
@@ -86,6 +94,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   );
 };
 
+// custom hook to use the CartContext in components
 export const useCart = () => {
   const context = useContext(CartContext);
   if (context === undefined) {
