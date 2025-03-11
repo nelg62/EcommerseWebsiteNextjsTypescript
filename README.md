@@ -23,4 +23,4 @@ ToDo--
 
 -- add ability to remove and add qantity of items in cart view rather then removing all
 
--- add tests to backed and frounednd functions when happy with them
+-- add tests to backed and frounednd functions when happy with them.
