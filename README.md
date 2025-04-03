@@ -230,7 +230,7 @@ Project Link: [https://github.com/nelg62/EcommerseWebsiteNextjsTypescript](https
 [license-url]: https://github.com/nelg62/EcommerseWebsiteNextjsTypescript/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/glen-harding-5a1317114
-[product-screenshot]: images/screenshot.png
+[product-screenshot]: public/Ecommercewebsitetypescript.png
 [Next.js]: https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white
 [Next-url]: https://nextjs.org/
 [React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
