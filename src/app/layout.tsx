@@ -4,6 +4,7 @@ import "./globals.css";
 import NavBar from "@/components/NavBar";
 import { CartProvider } from "@/context/CartContext";
 import { ThemeProvider } from "next-themes";
+import { ProductProvider } from "@/context/ProductContext";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -32,10 +33,12 @@ export default function RootLayout({
       >
         {/* Wrap everything inside ThemeProvider */}
         <ThemeProvider attribute="class" defaultTheme="system">
-          <CartProvider>
-            <NavBar />
-            {children}
-          </CartProvider>
+          <ProductProvider>
+            <CartProvider>
+              <NavBar />
+              {children}
+            </CartProvider>
+          </ProductProvider>
         </ThemeProvider>
       </body>
     </html>
