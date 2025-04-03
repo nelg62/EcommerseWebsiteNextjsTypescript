@@ -7,7 +7,7 @@ export default function Products() {
 
   return (
     <div className="bg-gray-200 dark:bg-gray-800">
-      <h1>Product Listing</h1>
+      {/* <h1>Product Listing</h1> */}
 
       {loading && <p>Loading products...</p>}
       {error && <p>{error}</p>}
