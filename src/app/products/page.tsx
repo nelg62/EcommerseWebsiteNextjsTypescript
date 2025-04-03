@@ -8,6 +8,7 @@ export default function Products() {
   const [loading, setLoading] = useState<boolean>(false); // state for loading
   const [error, setError] = useState<string | null>(null); // state for error
   const [nextUrl, setNextUrl] = useState<string | null>("/api/products?page=1"); // state to store URL for next page of products
+  const [fetchedPages, setFetchedPages] = useState(new Set<string>()); // track fetched pages
 
   const observer = useRef<IntersectionObserver | null>(null); // ref to store IntersectionObserver instance to check when scrolling screen
 
@@ -36,7 +37,7 @@ export default function Products() {
 
   // Function to fetch more products from API
   const fetchMoreProducts = async () => {
-    if (!nextUrl) return; // do nothing if there is no next URL
+    if (!nextUrl || fetchedPages.has(nextUrl)) return; // Avoid duplicate fetching
 
     setLoading(true); // set loading to true befor fetching
     try {
@@ -46,8 +47,16 @@ export default function Products() {
       }
       const data = await response.json(); // Parse JSON response
 
-      setProducts((prev) => [...prev, ...data.products]); // Append the new products to the existing list
+      setProducts((prev) => {
+        const existingIds = new Set(prev.map((product) => product.id));
+        const newProducts = data.products.filter(
+          (product: { id: number }) => !existingIds.has(product.id)
+        );
+        return [...prev, ...newProducts];
+      });
+
       setNextUrl(data.next); // Update next page URL
+      setFetchedPages((prev) => new Set(prev).add(nextUrl)); // Mark page as fetched
     } catch (err) {
       if (err instanceof Error) {
         setError(err.message); // set the srror message
