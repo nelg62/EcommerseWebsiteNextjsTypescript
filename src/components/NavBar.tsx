@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import ThemeToggle from "./ThemeToggle";
+import CartIcon from "./CartIcon";
 
 const NavBar = () => {
   console.log("NavBar rendered");
@@ -33,7 +34,8 @@ const NavBar = () => {
           </Link>
         </li>
       </ul>
-      <div className="">
+      <div className="flex gap-3">
+        <CartIcon />
         <ThemeToggle />
       </div>
     </nav>
