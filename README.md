@@ -149,6 +149,9 @@ This is an example of how to list things you need to use the software and how to
 
 npx prisma db pull
 
+npx prisma db push
+
+
 npx prisma migrate dev --name init
 
 npx prisma generate
