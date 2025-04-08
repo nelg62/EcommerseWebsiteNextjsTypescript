@@ -17,7 +17,12 @@ model Product {
   id          Int     @id @default(autoincrement())
   title       String
   price       Float
+  rating                Float
   description String  @db.Text
+  category              String
+  brand                 String
+  availabilityStatus    String
+  thumbnail             String
 }
 
 

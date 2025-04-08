@@ -151,6 +151,7 @@ npx prisma db pull
 
 npx prisma db push
 
+npx prisma migrate reset
 
 npx prisma migrate dev --name init
 

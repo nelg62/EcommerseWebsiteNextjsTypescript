@@ -10,7 +10,12 @@ async function main() {
         {
           title: product.title,
           price: product.price,
+          rating: product.rating,
           description: product.description,
+          category: product.category,
+          brand: product.brand,
+          availabilityStatus: product.availabilityStatus,
+          thumbnail: product.thumbnail,
         },
       ],
     });
