@@ -1,22 +1,20 @@
 import { PrismaClient } from "@prisma/client";
+import products from "./products";
 
 const prisma = new PrismaClient();
 
 async function main() {
-  await prisma.product.createMany({
-    data: [
-      {
-        title: "Test Product 1",
-        price: 19.99,
-        description: "This is a test product",
-      },
-      {
-        title: "Test Product 2",
-        price: 29.99,
-        description: "Another test product",
-      },
-    ],
-  });
+  for (const product of products) {
+    await prisma.product.createMany({
+      data: [
+        {
+          title: product.title,
+          price: product.price,
+          description: product.description,
+        },
+      ],
+    });
+  }
 
   console.log("✅ Seeded basic products!");
 }

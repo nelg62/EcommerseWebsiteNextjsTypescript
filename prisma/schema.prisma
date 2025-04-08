@@ -17,7 +17,7 @@ model Product {
   id          Int     @id @default(autoincrement())
   title       String
   price       Float
-  description String
+  description String  @db.Text
 }
 
 
