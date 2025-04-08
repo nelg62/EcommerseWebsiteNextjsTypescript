@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
+import { ProductApi } from "../api";
 
-// Example Product API, you can replace this with your actual API endpoint.
-const ProductApi = "https://dummyjson.com/products";
+// const ProductApi = "https://dummyjson.com/products";
 
 export async function GET(request: Request) {
   const url = new URL(request.url);
