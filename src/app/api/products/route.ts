@@ -1,8 +1,7 @@
+import prisma from "@/lib/prisma";
 import { NextResponse } from "next/server";
-import { ProductApi } from "../api";
 
-// const ProductApi = "https://dummyjson.com/products";
-
+// Your GET request to fetch products from the database
 export async function GET(request: Request) {
   const url = new URL(request.url);
   const page = url.searchParams.get("page") || "1";
@@ -10,19 +9,21 @@ export async function GET(request: Request) {
   const skip = (parseInt(page) - 1) * limit;
 
   try {
-    const response = await fetch(`${ProductApi}?skip=${skip}&limit=${limit}`);
-    if (!response.ok) {
-      throw new Error("Failed to fetch products");
-    }
-    const data = await response.json();
+    // Fetch products from the database using Prisma
+    const products = await prisma.product.findMany({
+      skip,
+      take: limit,
+    });
 
+    // Check if there are more products for pagination
     const nextPage =
-      data.products.length === limit
+      products.length === limit
         ? `/api/products?page=${parseInt(page) + 1}`
         : null;
 
+    // Return the response with the products and next page link
     return NextResponse.json({
-      products: data.products,
+      products,
       next: nextPage,
     });
   } catch (error) {
