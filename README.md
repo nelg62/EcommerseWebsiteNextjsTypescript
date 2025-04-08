@@ -98,6 +98,12 @@ Backend:
 
 Database: n/a
 
+tools to add
+
+-- docker (running mySQL)
+
+-- prisma
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- GETTING STARTED -->
@@ -140,6 +146,13 @@ This is an example of how to list things you need to use the software and how to
 ## Usage
 
 <!-- Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+
+npx prisma db pull
+
+npx prisma migrate dev --name init
+
+npx prisma generate
+npx prisma db seed
 
 _For more examples, please refer to the [Documentation](https://example.com)_ -->
 

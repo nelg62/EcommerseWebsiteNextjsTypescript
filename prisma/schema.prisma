@@ -1,0 +1,76 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Product {
+  id          Int     @id @default(autoincrement())
+  title       String
+  price       Float
+  description String
+}
+
+
+// model Product {
+//   id                    Int        @id @default(autoincrement())
+//   title                 String
+//   description           String
+//   category              String
+//   price                 Float
+//   discountPercentage    Float
+//   rating                Float
+//   stock                 Int
+//   tags                  Tag[] @relation("ProductTags")
+//   brand                 String
+//   sku                   String
+//   weight                Float
+//   width                 Float
+//   height                Float
+//   depth                 Float
+//   warrantyInformation   String
+//   shippingInformation   String
+//   availabilityStatus    String
+//   returnPolicy          String
+//   minimumOrderQuantity  Int
+//   createdAt             DateTime   @default(now())
+//   updatedAt             DateTime   @updatedAt
+//   barcode               String
+//   qrCode                String
+//   thumbnail             String
+//   images                ProductImage[]
+//   reviews               Review[]
+// }
+
+// model ProductImage {
+//   id        Int     @id @default(autoincrement())
+//   url       String
+//   product   Product @relation(fields: [productId], references: [id])
+//   productId Int
+// }
+
+// model Review {
+//   id         Int     @id @default(autoincrement())
+//   rating     Int
+//   comment    String
+//   date       DateTime
+//   reviewerName  String
+//   reviewerEmail String
+//   product    Product @relation(fields: [productId], references: [id])
+//   productId  Int
+// }
+
+// model Tag {
+//   id        Int       @id @default(autoincrement())
+//   name      String  @unique
+//   products  Product[] @relation("ProductTags")
+// }
