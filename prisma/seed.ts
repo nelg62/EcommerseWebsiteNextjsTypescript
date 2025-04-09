@@ -13,7 +13,7 @@ async function main() {
           rating: product.rating,
           description: product.description,
           category: product.category,
-          brand: product.brand,
+          brand: product.brand ?? "Unknown Brand",
           availabilityStatus: product.availabilityStatus,
           thumbnail: product.thumbnail,
         },
