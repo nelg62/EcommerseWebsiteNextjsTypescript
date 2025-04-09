@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import prisma from "@/lib/prisma";
 
 export async function GET(
   request: NextRequest,
@@ -16,19 +15,16 @@ export async function GET(
   }
 
   try {
-    const product = await prisma.product.findUnique({
-      where: {
-        id: parseInt(id),
-      },
-    });
+    const response = await fetch(`https://dummyjson.com/products/${id}`);
 
-    if (!product) {
+    if (!response.ok) {
       return NextResponse.json(
-        { error: `Product with ID ${id} not found` },
-        { status: 404 }
+        { error: `Failed to fetch product with id ${id}` },
+        { status: response.status }
       );
     }
 
+    const product = await response.json();
     return NextResponse.json(product);
   } catch (error) {
     console.error(`Failed to fetch product with id ${id}`, error);
