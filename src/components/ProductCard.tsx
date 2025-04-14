@@ -103,7 +103,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             {product.title}
           </h3>
           <p className="uppercase text-green-600 text-xs font-medium">
-            {product.brand} ({product.category})
+            {product.brand == "Unknown Brand" ? "" : product.brand} (
+            {product.category})
           </p>
           {/* <!-- Ratings --> */}
           <div className="flex space-x-1 text-orange-500 text-sm mt-1">
@@ -122,49 +123,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
               </svg>
             ))}
           </div>
-          {/* <div className="flex space-x-1 text-orange-500 text-sm mt-1">
-          
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-4 w-4"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-            >
-              <path d="M9.049 2.927C9.349 2.2 10.651 2.2 10.951 2.927l1.558 3.779 4.004.37c.85.079 1.194 1.139.572 1.724l-2.922 2.658.87 3.917c.181.816-.68 1.448-1.419 1.034L10 13.01l-3.614 1.96c-.74.414-1.6-.218-1.419-1.034l.87-3.917-2.922-2.658c-.622-.585-.278-1.645.572-1.724l4.004-.37L9.049 2.927z" />
-            </svg>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-4 w-4"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-            >
-              <path d="M9.049 2.927C9.349 2.2 10.651 2.2 10.951 2.927l1.558 3.779 4.004.37c.85.079 1.194 1.139.572 1.724l-2.922 2.658.87 3.917c.181.816-.68 1.448-1.419 1.034L10 13.01l-3.614 1.96c-.74.414-1.6-.218-1.419-1.034l.87-3.917-2.922-2.658c-.622-.585-.278-1.645.572-1.724l4.004-.37L9.049 2.927z" />
-            </svg>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-4 w-4"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-            >
-              <path d="M9.049 2.927C9.349 2.2 10.651 2.2 10.951 2.927l1.558 3.779 4.004.37c.85.079 1.194 1.139.572 1.724l-2.922 2.658.87 3.917c.181.816-.68 1.448-1.419 1.034L10 13.01l-3.614 1.96c-.74.414-1.6-.218-1.419-1.034l.87-3.917-2.922-2.658c-.622-.585-.278-1.645.572-1.724l4.004-.37L9.049 2.927z" />
-            </svg>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-4 w-4"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-            >
-              <path d="M9.049 2.927C9.349 2.2 10.651 2.2 10.951 2.927l1.558 3.779 4.004.37c.85.079 1.194 1.139.572 1.724l-2.922 2.658.87 3.917c.181.816-.68 1.448-1.419 1.034L10 13.01l-3.614 1.96c-.74.414-1.6-.218-1.419-1.034l.87-3.917-2.922-2.658c-.622-.585-.278-1.645.572-1.724l4.004-.37L9.049 2.927z" />
-            </svg>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-4 w-4 text-gray-300"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-            >
-              <path d="M9.049 2.927C9.349 2.2 10.651 2.2 10.951 2.927l1.558 3.779 4.004.37c.85.079 1.194 1.139.572 1.724l-2.922 2.658.87 3.917c.181.816-.68 1.448-1.419 1.034L10 13.01l-3.614 1.96c-.74.414-1.6-.218-1.419-1.034l.87-3.917-2.922-2.658c-.622-.585-.278-1.645.572-1.724l4.004-.37L9.049 2.927z" />
-            </svg>
-          </div> */}
+
           {/* <!-- Pricing --> */}
           <div className="flex items-end justify-between">
             <div className="flex items-baseline space-x-2 mt-2">
@@ -225,39 +184,6 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         </div>
       </div>
     </div>
-    // <article className="max-w-sm w-full bg-white rounded-lg shadow-lg overflow-hidden dark:bg-gray-700">
-    //   <div onClick={handleCardClick} className="cursor-pointer">
-    //     <Image
-    //       src={product.thumbnail}
-    //       alt={`${product.title}`}
-    //       width={500}
-    //       height={500}
-    //       priority
-    //       className="object-cover h-64 w-full"
-    //     />
-    //   </div>
-    //   <div className="flex flex-col gap-1 mt-4 px-4">
-    //     <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-50">
-    //       {product.title}
-    //     </h2>
-    //     <span className="font-normal text-gray-600 dark:text-gray-300">
-    //       {product.brand} ({product.category})
-    //     </span>
-    //     <span className="font-semibold text-gray-800 dark:text-gray-50">
-    //       ${product.price}
-    //     </span>
-    //   </div>
-
-    //   <div className="mt-4 p-4 border-t border-gray-200 dark:border-gray-500">
-    //     <button
-    //       onClick={handleAddToCart}
-    //       className="w-full flex justify-between items-center font-bold cursor-pointer hover:underline text-gray-800 dark:text-gray-50"
-    //     >
-    //       <span className="text-base">Add to Cart</span>
-    //       <div className="h-6 w-6">+</div>
-    //     </button>
-    //   </div>
-    // </article>
   );
 };
 
