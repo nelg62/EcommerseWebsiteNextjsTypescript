@@ -19,6 +19,7 @@ interface CartContextProps {
   addToCart: (product: Product, userId: number) => void;
   removeFromCart: (productId: number, userId: number) => void;
   clearCart: (userId: number) => void;
+  refreshCart: () => void;
 }
 
 // create CartContext with undefined as initial value
@@ -30,19 +31,18 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
 
   const userId = 1;
 
+  const fetchCart = async () => {
+    try {
+      const response = await fetch(`/api/cart?userId=${userId}`);
+      if (!response.ok) throw new Error("Failed to fetch cart");
+      const data = await response.json();
+      setCart(Array.isArray(data.cart) ? data.cart : []);
+    } catch (error) {
+      console.error("Error loading cart:", error);
+    }
+  };
+
   useEffect(() => {
-    const fetchCart = async () => {
-      try {
-        const response = await fetch(`/api/cart?userId=${userId}`);
-        if (!response.ok) throw new Error("Failed to fetch cart");
-
-        const data = await response.json();
-        setCart(Array.isArray(data.cart) ? data.cart : []);
-      } catch (error) {
-        console.error("Error loading cart:", error);
-      }
-    };
-
     if (userId) fetchCart();
   }, [userId]);
 
@@ -85,6 +85,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
 
       const data = await response.json();
       setCart(Array.isArray(data.cart) ? data.cart : []);
+      await fetchCart();
     } catch (error) {
       console.error("Error removing form cart", error);
     }
@@ -104,6 +105,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
 
       const data = await response.json();
       setCart(Array.isArray(data.cart) ? data.cart : []);
+      await fetchCart();
     } catch (error) {
       console.error("Error clearing the cart:", error);
     }
@@ -112,7 +114,13 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   // provide cart state and methods to components
   return (
     <CartContext.Provider
-      value={{ cart, addToCart, removeFromCart, clearCart }}
+      value={{
+        cart,
+        addToCart,
+        removeFromCart,
+        clearCart,
+        refreshCart: fetchCart,
+      }}
     >
       {children}
     </CartContext.Provider>

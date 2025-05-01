@@ -1,9 +1,14 @@
 import { useCart } from "@/context/CartContext";
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect } from "react";
 
 const CartReviewPage = () => {
-  const { cart, removeFromCart, clearCart } = useCart();
+  const { cart, removeFromCart, clearCart, refreshCart } = useCart();
+
+  useEffect(() => {
+    refreshCart();
+  }, []);
 
   const calculateSubtotal = () => {
     return cart.reduce((total, item) => total + item.price * item.quantity, 0);
@@ -68,6 +73,7 @@ const CartReviewPage = () => {
                         Qty: {item.quantity}
                       </p>
                       <button
+                        type="button"
                         onClick={() => removeFromCart(1, item.id)}
                         className="text-red-500 underline text-sm"
                       >
@@ -89,6 +95,7 @@ const CartReviewPage = () => {
             </Link>
             {cart.length > 0 && (
               <button
+                type="button"
                 onClick={() => clearCart(1)}
                 className="text-red-500 text-sm font-semibold"
               >
