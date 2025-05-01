@@ -21,6 +21,7 @@ interface ProductContextProps {
       "price-asc" | "price-desc" | "title-asc" | "title-desc"
     >
   >;
+  setCategory: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
 const ProductContext = createContext<ProductContextProps | undefined>(
@@ -36,20 +37,23 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
   const [sortOption, setSortOption] = useState<
     "price-asc" | "price-desc" | "title-asc" | "title-desc"
   >("title-asc");
+  const [category, setCategory] = useState<string | null>(null);
 
   const observer = useRef<IntersectionObserver | null>(null); // ref to store IntersectionObserver instance to check when scrolling screen
 
   useEffect(() => {
     setProducts([]);
     setFetchedPages(new Set());
-    const firstPageUrl = `/api/products?page=1&sort=${sortOption}`;
+
+    const firstPageUrl = `/api/products?page=1&sort=${sortOption}${
+      category ? `&category=${encodeURIComponent(category)}` : ""
+    }`;
     setNextUrl(firstPageUrl);
 
-    // Immediately fetch the sorted products
-    const fetchInitialSortedProducts = async () => {
+    const fetchInitial = async () => {
       try {
         const response = await fetch(firstPageUrl);
-        if (!response.ok) throw new Error("Failed to fetch sorted products");
+        if (!response.ok) throw new Error("Failed to fetch products");
         const data = await response.json();
         setProducts(data.products);
         setNextUrl(data.next);
@@ -60,8 +64,8 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
       }
     };
 
-    fetchInitialSortedProducts();
-  }, [sortOption]);
+    fetchInitial();
+  }, [sortOption, category]);
 
   // callback to check the last product element for infinite scrolling
   const lastProductRef = useCallback(
@@ -128,6 +132,7 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
         fetchMoreProducts,
         lastProductRef,
         setSortOption,
+        setCategory,
       }}
     >
       {children}

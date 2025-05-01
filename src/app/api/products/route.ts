@@ -7,6 +7,7 @@ export async function GET(request: Request) {
   const url = new URL(request.url);
   const page = url.searchParams.get("page") || "1";
   const sort = url.searchParams.get("sort") || "title-asc";
+  const category = url.searchParams.get("category")?.toLowerCase();
 
   const limit = 20; // Number of products per page
   const skip = (parseInt(page) - 1) * limit;
@@ -29,18 +30,29 @@ export async function GET(request: Request) {
       break;
   }
 
+  const whereClause = category
+    ? {
+        category: {
+          equals: category,
+        },
+      }
+    : undefined;
+
   try {
     // Fetch products from the database using Prisma
     const products = await prisma.product.findMany({
       skip,
       take: limit,
       orderBy,
+      where: whereClause,
     });
 
     // Check if there are more products for pagination
     const nextPage =
       products.length === limit
-        ? `/api/products?page=${parseInt(page) + 1}&sort=${sort}`
+        ? `/api/products?page=${parseInt(page) + 1}&sort=${sort}${
+            category ? `&category=${category}` : ""
+          }`
         : null;
 
     // Return the response with the products and next page link
