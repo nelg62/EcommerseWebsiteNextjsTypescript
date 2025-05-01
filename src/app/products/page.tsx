@@ -1,5 +1,6 @@
 "use client";
 import ProductCard from "@/components/ProductCard";
+import SortDropdown from "@/components/productSorting";
 import { useProduct } from "@/context/ProductContext";
 
 export default function Products() {
@@ -13,6 +14,7 @@ export default function Products() {
       {error && <p>{error}</p>}
 
       <div className="h-screen w-full bg-gray-200 dark:bg-gray-800">
+        <SortDropdown />
         <div className="grid gap-6 p-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 bg-gray-200 dark:bg-gray-800">
           {products.map((product, index) => {
             if (index === products.length - 1) {

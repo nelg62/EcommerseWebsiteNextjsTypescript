@@ -16,6 +16,11 @@ interface ProductContextProps {
   error: string | null;
   fetchMoreProducts: () => void;
   lastProductRef: (node: HTMLDivElement | null) => void;
+  setSortOption: React.Dispatch<
+    React.SetStateAction<
+      "price-asc" | "price-desc" | "title-asc" | "title-desc"
+    >
+  >;
 }
 
 const ProductContext = createContext<ProductContextProps | undefined>(
@@ -28,8 +33,35 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
   const [error, setError] = useState<string | null>(null); // state for error
   const [nextUrl, setNextUrl] = useState<string | null>("/api/products?page=1"); // state to store URL for next page of products
   const [fetchedPages, setFetchedPages] = useState(new Set<string>()); // track fetched pages
+  const [sortOption, setSortOption] = useState<
+    "price-asc" | "price-desc" | "title-asc" | "title-desc"
+  >("title-asc");
 
   const observer = useRef<IntersectionObserver | null>(null); // ref to store IntersectionObserver instance to check when scrolling screen
+
+  useEffect(() => {
+    setProducts([]);
+    setFetchedPages(new Set());
+    const firstPageUrl = `/api/products?page=1&sort=${sortOption}`;
+    setNextUrl(firstPageUrl);
+
+    // Immediately fetch the sorted products
+    const fetchInitialSortedProducts = async () => {
+      try {
+        const response = await fetch(firstPageUrl);
+        if (!response.ok) throw new Error("Failed to fetch sorted products");
+        const data = await response.json();
+        setProducts(data.products);
+        setNextUrl(data.next);
+        setFetchedPages(new Set([firstPageUrl]));
+      } catch (err) {
+        if (err instanceof Error) setError(err.message);
+        else setError("An unknown error occurred");
+      }
+    };
+
+    fetchInitialSortedProducts();
+  }, [sortOption]);
 
   // callback to check the last product element for infinite scrolling
   const lastProductRef = useCallback(
@@ -89,7 +121,14 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <ProductContext.Provider
-      value={{ products, loading, error, fetchMoreProducts, lastProductRef }}
+      value={{
+        products,
+        loading,
+        error,
+        fetchMoreProducts,
+        lastProductRef,
+        setSortOption,
+      }}
     >
       {children}
     </ProductContext.Provider>
