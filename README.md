@@ -166,7 +166,8 @@ _For more examples, please refer to the [Documentation](https://example.com)_ --
 
 ## Roadmap
 
-- [ ] create product sort
+- [ x ] create product sort
+- [ ] create product search
 - [ ] fix when deleting or clearing cart it refreshes and scrolls to top of page
 - [ ] add ability to remove/add spesific quantity of items to/from cart
 - [ ] add testing
