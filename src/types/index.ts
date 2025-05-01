@@ -32,6 +32,7 @@ export interface Product {
   reviews: Review[];
   returnPolicy: string;
   minimumOrderQuantity: number;
+  userId?: number;
   meta: {
     createdAt: string;
     updatedAt: string;

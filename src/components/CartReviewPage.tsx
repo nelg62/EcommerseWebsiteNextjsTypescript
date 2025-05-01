@@ -30,22 +30,26 @@ const CartReviewPage = () => {
               Your Cart
             </p>
 
-            {cart.length === 0 ? (
+            {Array.isArray(cart) && cart.length === 0 ? (
               <p className="text-gray-600 mt-4">Your cart is empty.</p>
             ) : (
+              Array.isArray(cart) &&
               cart.map((item) => (
                 <div
                   key={item.id}
                   className="mt-6 md:mt-6 flex flex-col md:flex-row justify-start items-start md:items-center md:space-x-6 xl:space-x-8 w-full border-b pb-6"
                 >
                   <div className="w-full md:w-40">
-                    <Image
-                      src={item.thumbnail}
-                      alt={item.title}
-                      width={160}
-                      height={160}
-                      className="object-cover"
-                    />
+                    {item.thumbnail ? (
+                      <Image
+                        src={item.thumbnail}
+                        alt={item.title || "product image"}
+                        width={160}
+                        height={160}
+                        className="object-cover"
+                        priority
+                      />
+                    ) : null}
                   </div>
                   <div className="flex flex-col md:flex-row justify-between items-start w-full">
                     <div className="w-full flex flex-col justify-start items-start space-y-2">
@@ -58,13 +62,13 @@ const CartReviewPage = () => {
                     </div>
                     <div className="flex justify-between items-center w-full md:w-auto space-x-4">
                       <p className="text-base dark:text-white xl:text-lg leading-6 text-gray-800">
-                        ${item.price.toFixed(2)}
+                        ${item.price}
                       </p>
                       <p className="text-base dark:text-white xl:text-lg leading-6 text-gray-800">
                         Qty: {item.quantity}
                       </p>
                       <button
-                        onClick={() => removeFromCart(item.id)}
+                        onClick={() => removeFromCart(1, item.id)}
                         className="text-red-500 underline text-sm"
                       >
                         Remove
@@ -85,7 +89,7 @@ const CartReviewPage = () => {
             </Link>
             {cart.length > 0 && (
               <button
-                onClick={clearCart}
+                onClick={() => clearCart(1)}
                 className="text-red-500 text-sm font-semibold"
               >
                 Clear Cart

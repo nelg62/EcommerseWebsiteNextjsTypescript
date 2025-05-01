@@ -1,29 +1,46 @@
-import { Cart, CartItem } from "@/types";
+import prisma from "@/lib/prisma";
+// import { CartItem } from "@prisma/client";
 
-const cart: Cart = [];
-
-export function getCart() {
-  return cart;
+export async function getCart(userId: number) {
+  return await prisma.cartItem.findMany({
+    where: { userId },
+    include: { product: true },
+  });
 }
 
-export function addToCart(item: CartItem) {
-  const existingItemIndex = cart.findIndex(
-    (cartItem) => cartItem.id === item.id
-  );
-  if (existingItemIndex !== -1) {
-    cart[existingItemIndex].quantity += item.quantity;
+export async function addToCart(
+  userId: number,
+  productId: number,
+  quantity: number
+) {
+  const existingItem = await prisma.cartItem.findFirst({
+    where: { userId, productId },
+  });
+
+  if (existingItem) {
+    return await prisma.cartItem.update({
+      where: { id: existingItem.id },
+      data: { quantity: existingItem.quantity + quantity },
+    });
   } else {
-    cart.push(item);
+    return await prisma.cartItem.create({
+      data: {
+        userId,
+        productId,
+        quantity,
+      },
+    });
   }
 }
 
-export function removeFromCart(itemId: number) {
-  const index = cart.findIndex((item) => item.id === itemId);
-  if (index !== -1) {
-    cart.splice(index, 1);
-  }
+export async function removeFromCart(userId: number, productId: number) {
+  return await prisma.cartItem.deleteMany({
+    where: { userId, productId },
+  });
 }
 
-export function clearCart() {
-  cart.length = 0;
+export async function clearCart(userId: number) {
+  return await prisma.cartItem.deleteMany({
+    where: { userId },
+  });
 }

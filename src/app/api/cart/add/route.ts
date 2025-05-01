@@ -1,17 +1,18 @@
+// src/app/api/cart/add/route.ts
 import { NextResponse } from "next/server";
-import { CartItem } from "@/types";
 import { addToCart, getCart } from "../cartStore";
 
 export async function POST(request: Request) {
   try {
-    const { id, title, price, thumbnail, quantity } = await request.json();
-    const newItem: CartItem = { id, title, price, thumbnail, quantity };
+    const { userId, productId, quantity } = await request.json();
+    console.log("productID", productId);
 
-    addToCart(newItem);
+    await addToCart(userId, productId, quantity);
+    const cart = await getCart(userId);
 
     return NextResponse.json({
       message: "Item added to cart",
-      cart: getCart(),
+      cart,
     });
   } catch (error) {
     console.error("Error adding to cart:", error);

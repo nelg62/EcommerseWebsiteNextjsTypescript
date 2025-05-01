@@ -23,8 +23,8 @@ const ProductPage: React.FC<ProductPageProps> = ({
 
   const handleAddToCart = () => {
     console.log("productpage add to cart", product.id);
-
-    addToCart(product);
+    const userId = 1;
+    addToCart(product, userId);
   };
 
   return (
