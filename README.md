@@ -167,11 +167,9 @@ _For more examples, please refer to the [Documentation](https://example.com)_ --
 ## Roadmap
 
 - [ ] create product sort
-- [ ] when deleting item in shopping cart it deletes all sometimes
-- [ ] when refreshing page after deleting item from cart cart is not displayed
+- [ ] fix when deleting or clearing cart it refreshes and scrolls to top of page
 - [ ] add ability to remove/add spesific quantity of items to/from cart
 - [ ] add testing
-- [ ] setup database with supabase to store and update items
 - [ ] create users
 - [ ] ability to add and edit products
 - [ ] on main page add top purcused products
