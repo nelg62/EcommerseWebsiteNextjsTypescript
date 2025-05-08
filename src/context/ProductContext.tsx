@@ -9,6 +9,7 @@ import {
   useRef,
   useState,
 } from "react";
+import { useSearchParams } from "next/navigation";
 
 interface ProductContextProps {
   products: Product[];
@@ -38,6 +39,8 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
     "price-asc" | "price-desc" | "title-asc" | "title-desc"
   >("title-asc");
   const [category, setCategory] = useState<string | null>(null);
+  const searchParams = useSearchParams();
+  const search = searchParams.get("search") || "";
 
   const observer = useRef<IntersectionObserver | null>(null); // ref to store IntersectionObserver instance to check when scrolling screen
 
@@ -47,7 +50,7 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
 
     const firstPageUrl = `/api/products?page=1&sort=${sortOption}${
       category ? `&category=${encodeURIComponent(category)}` : ""
-    }`;
+    }${search ? `&search=${encodeURIComponent(search)}` : ""}`;
     setNextUrl(firstPageUrl);
 
     const fetchInitial = async () => {
@@ -122,6 +125,21 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
       setLoading(false); // set loading to false after fetching
     }
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetch(
+        `/api/products?page=1&sort=${sortOption}${
+          category ? `&category=${category}` : ""
+        }${search ? `&search=${search}` : ""}`
+      );
+      const data = await response.json();
+      setProducts(data.products);
+      setNextUrl(data.next);
+    };
+
+    fetchData();
+  }, [sortOption, category, search]);
 
   return (
     <ProductContext.Provider

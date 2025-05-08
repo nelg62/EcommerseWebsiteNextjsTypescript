@@ -8,6 +8,7 @@ export async function GET(request: Request) {
   const page = url.searchParams.get("page") || "1";
   const sort = url.searchParams.get("sort") || "title-asc";
   const category = url.searchParams.get("category")?.toLowerCase();
+  const search = url.searchParams.get("search")?.toLowerCase();
 
   const limit = 20; // Number of products per page
   const skip = (parseInt(page) - 1) * limit;
@@ -30,13 +31,19 @@ export async function GET(request: Request) {
       break;
   }
 
-  const whereClause = category
-    ? {
-        category: {
-          equals: category,
-        },
-      }
-    : undefined;
+  const whereClause: Prisma.ProductWhereInput = {
+    ...(category && {
+      category: {
+        equals: category,
+      },
+    }),
+    ...(search && {
+      title: {
+        contains: search,
+        // mode: "insensitive", // <-- this requires Prisma v5+
+      },
+    }),
+  };
 
   try {
     // Fetch products from the database using Prisma
