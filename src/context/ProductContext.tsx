@@ -23,6 +23,7 @@ interface ProductContextProps {
     >
   >;
   setCategory: React.Dispatch<React.SetStateAction<string | null>>;
+  category: string | null;
 }
 
 const ProductContext = createContext<ProductContextProps | undefined>(
@@ -151,6 +152,7 @@ export const ProductProvider = ({ children }: { children: ReactNode }) => {
         lastProductRef,
         setSortOption,
         setCategory,
+        category,
       }}
     >
       {children}
