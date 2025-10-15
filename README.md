@@ -98,6 +98,8 @@ Backend:
 
 Database: n/a
 
+-- currently pointing to old Supabase e-commerce library, will need to create this again for the updated project once happy with MySQL creation and syncing to Supabase is working nicely from the local machine
+
 tools to add
 
 -- docker (running mySQL)
